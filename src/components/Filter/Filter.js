@@ -1,23 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions';
 import selectors from '../../redux/selectors';
 
-const Filter = ({ value, onChange }) => (
-    <label>
-        Find contacts by name
-         <br />
-        <input type='text' value={value} onChange={onChange} placeholder='Search contacts' />
-    </label>);
+export default function Filter() {
+    const dispatch = useDispatch();
+    const value = useSelector(selectors.getFilter);
 
-Filter.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({ value: selectors.getFilter(state), });
-
-const mapDispatchToProps = dispatch => ({ onChange: (e) => dispatch(actions.changeFilter(e.target.value)) });
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+    const onChange = useCallback(e => {
+        dispatch(actions.changeFilter(e.target.value));
+    }, [dispatch]);
+    return (
+        <label>
+            Find contacts by name
+            <br />
+            <input type='text' value={value} onChange={onChange} placeholder='Search contacts' />
+        </label>);
+}
