@@ -25,4 +25,4 @@ const getFilteredContacts = createSelector(
   );
 });
 // eslint-disable-next-line
-export default { getFilter, getFilteredContacts, };
+export default { getFilter, getFilteredContacts, getAllContacts};
